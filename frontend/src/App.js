@@ -32,28 +32,28 @@ class App extends Component {
         <Row>
             <Col xs={12} md={8}>
                 <DataTable
-                    dataUrl='/activities/'
+                    dataUrl={'/activities/?client_web_key='
+                                + new URLSearchParams(window.location.search)
+                                                    .get('client_web_key')}
+                    sortKey={['-started_at', 'task__short_desc', 'id']}
                     fields={[
-                        {   
-                            key: 'id',
-                            type: 'text',
+                        {
+                            key: 'started_at',
+                            header: 'Date',
+                            type: 'date',
                             width: 100,
                         },
                         {
                             key: 'task__short_desc',
+                            header: 'Description',
                             type: 'text',
-                            width: 350,
+                            width: 500,
                         },
                         {
                             key: 'hours',
                             type: 'number',
                             decimals: 2,
-                            width: 80,
-                        },
-                        {
-                            key: 'started_at',
-                            type: 'date',
-                            width: 100,
+                            width: 60,
                         },
                     ]}
                 />
@@ -72,39 +72,61 @@ class DataTable extends Component {
     }
 
     getCell({fieldObj, rowIndex, width, height}) {
-        let keys = fieldObj.key.split(/__/);
-        let type = fieldObj.type;
-
         if (!this.state.dataRows[rowIndex]) return '';
 
-        let val = this.state.dataRows[rowIndex];
-        for (let key of keys) {
-            val = val[key];
-        }
+        let val = this.state.dataRows[rowIndex].get(fieldObj.key);
 
-        if (type === 'text') {
-            ;
-        } else if (type === 'number') {
+        if (fieldObj.type === 'number') {
             val = Number.parseFloat(val).toFixed(fieldObj.decimals);
-        } else if (type === 'date') {
+        } else if (fieldObj.type === 'date') {
             val = val.slice(0, 10);
         }
 
         return <Cell>{val}</Cell>;
     }
 
+    processDataRows(dataRows) {
+        for (let rowObj of dataRows) {
+            rowObj.get = utils.keyLookup.bind(rowObj);
+        };
+        dataRows = this.sortedDataRows(dataRows);
+        return dataRows;
+    }
+
+    sortedDataRows(dataRows) {
+        dataRows.sort((x,y) => {
+            for (let key of this.props.sortKey) {
+                let sign = 1;
+                if (key[0] === '-') {
+                    sign = -1;
+                    key = key.slice(1);
+                }
+
+                if (x.get(key) < y.get(key)) return sign * (-1);
+                if (x.get(key) > y.get(key)) return sign * (+1);
+            }
+            return 0;
+        });
+        return dataRows;
+    }
+
     componentDidMount() {
         ajax(
             this.props.dataUrl,
-            dataRows => this.setState({dataRows})
+            dataRows => this.setState({
+                dataRows: this.processDataRows(dataRows)
+            })
         );
     }
 
     render() {
         let columns = [];
         for (let fieldObj of this.props.fields) {
-            let header = utils.getHrFieldName(fieldObj.key);
+            let header = null;
+            if (fieldObj.header) header = fieldObj.header;
+            else header = utils.getHrFieldName(fieldObj.key);
             let width = fieldObj.width;
+
             let column = (
                 <Column
                     key={fieldObj.key}
@@ -117,10 +139,10 @@ class DataTable extends Component {
         }
         return (
             <Table
-                rowHeight={50}
+                rowHeight={30}
                 rowsCount={this.state.dataRows.length}
                 width={800}
-                height={500}
+                maxHeight={5500}
                 headerHeight={50}
             >
                 {columns}

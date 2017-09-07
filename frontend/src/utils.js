@@ -1,5 +1,5 @@
 let utils = {
-    getHrFieldName: function (fieldName) {
+    getHrFieldName: function(fieldName) {
         let segments = fieldName.split(/_+/);
 
         for (let i = 0; i<segments.length; i++) {
@@ -18,7 +18,20 @@ let utils = {
         }
 
         return segments.join(' ');
-    }
+    },
+
+    keyLookup: function(key) {
+        let keys = key.split(/__/);
+
+        if (!this) return undefined;
+
+        let val = this;
+        for (let key of keys) {
+            val = val[key];
+        }
+
+        return val;
+    },
 }
 
 export default utils;

@@ -13,7 +13,7 @@ from django.core.files.base import ContentFile
 from django.db import models, transaction
 from django.templatetags.static import static
 
-from apptb.utils import pk8, format_amount
+from apptb.utils import pk8, pk16, format_amount
 
 DEBUG_PDF = False
 
@@ -342,6 +342,24 @@ class Client(models.Model):
 
     def __unicode__(self):
         return unicode(self.code)
+
+class ClientWebKey(models.Model):
+    id = models.CharField(max_length=8, primary_key=True,
+                          default=pk8, editable=False)
+    client = models.ForeignKey('Client')
+    key = models.CharField(max_length=16, unique=True, default=pk16)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['client', 'id']
+        verbose_name = 'Client Web Key'
+        verbose_name_plural = 'Client Web Keys'
+
+    def __unicode__(self):
+        return unicode(self.client) + '-' + self.key
+
 
 class Project(models.Model):
     id = models.CharField(max_length=8, primary_key=True,
