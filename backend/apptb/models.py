@@ -392,7 +392,7 @@ class Task(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['project', 'date', 'short_desc']
+        ordering = ['-updated_at', 'project', 'date', 'short_desc']
         verbose_name = 'Task'
         verbose_name_plural = 'Tasks'
 
@@ -414,7 +414,7 @@ class Activity(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['task', 'started_at']
+        ordering = ['-updated_at', 'task', 'started_at']
         verbose_name = 'Activity'
         verbose_name_plural = 'Activities'
 
@@ -427,7 +427,11 @@ class Activity(models.Model):
                 'Only one of finished_at, hours can be defined')
 
     def __unicode__(self):
-        return unicode(self.id)
+        return '%s - %s - %s - %s' % (
+            self.task,
+            self.started_at and self.started_at.date(),
+            self.finished_at and self.finished_at.date(),
+            self.hours)
 
 class Charge(models.Model):
     id = models.CharField(max_length=8, primary_key=True,
@@ -446,12 +450,12 @@ class Charge(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['date', 'activity']
+        ordering = ['-date', 'activity']
         verbose_name = 'Charge'
         verbose_name_plural = 'Charges'
 
     def __unicode__(self):
-        return unicode(self.id)
+        return '%s' % self.activity
 
 class RecvPayment(models.Model):
     id = models.CharField(max_length=8, primary_key=True,
