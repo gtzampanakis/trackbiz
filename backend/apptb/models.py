@@ -473,12 +473,17 @@ class RecvPayment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['date', 'client']
+        ordering = ['-date', 'client']
         verbose_name = 'Received Payment'
         verbose_name_plural = 'Received Payments'
 
     def __unicode__(self):
-        return unicode(self.id)
+        return '%s - %s - %s %s' % (
+            self.date,
+            self.client,
+            self.amount,
+            self.currency,
+        )
 
 class Invoice(models.Model):
     id = models.CharField(max_length=8, primary_key=True,

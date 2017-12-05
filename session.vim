@@ -51,7 +51,6 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 set shortmess=aoO
 badd +88 frontend/src/App.js
-badd +13149 frontend/node_modules/react-data-grid/dist/react-data-grid.js
 badd +38 frontend/public/index.html
 badd +12 frontend/package.json
 badd +1 backend/apptb/serializers.py
@@ -62,6 +61,7 @@ badd +16 backend/apptb/views.py
 badd +15 backend/apptb/utils.py
 badd +37 backend/apptb/admin.py
 badd +22 backend/trackbiz/urls.py
+badd +0 ~/dev/trackbiz/src
 argglobal
 silent! argdel *
 argadd ~/dev/trackbiz/src
@@ -76,8 +76,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 27 + 28) / 57)
-exe '2resize ' . ((&lines * 26 + 28) / 57)
+exe '1resize ' . ((&lines * 35 + 36) / 72)
+exe '2resize ' . ((&lines * 33 + 36) / 72)
 argglobal
 setlocal keymap=
 setlocal noarabic
@@ -187,12 +187,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 72 - ((6 * winheight(0) + 13) / 27)
+let s:l = 72 - ((8 * winheight(0) + 17) / 35)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 72
-normal! 014|
+normal! 05|
 lcd ~/dev/trackbiz/src
 wincmd w
 argglobal
@@ -305,7 +305,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 142 - ((9 * winheight(0) + 13) / 26)
+let s:l = 142 - ((11 * winheight(0) + 16) / 33)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -313,24 +313,20 @@ normal! zt
 normal! 026|
 lcd ~/dev/trackbiz/src
 wincmd w
-exe '1resize ' . ((&lines * 27 + 28) / 57)
-exe '2resize ' . ((&lines * 26 + 28) / 57)
-tabedit ~/dev/trackbiz/src/backend/apptb/views.py
+exe '1resize ' . ((&lines * 35 + 36) / 72)
+exe '2resize ' . ((&lines * 33 + 36) / 72)
+tabedit ~/dev/trackbiz/src/backend/apptb/models.py
 set splitbelow splitright
 wincmd _ | wincmd |
 split
-wincmd _ | wincmd |
-split
-2wincmd k
-wincmd w
+1wincmd k
 wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 26 + 28) / 57)
-exe '2resize ' . ((&lines * 25 + 28) / 57)
-exe '3resize ' . ((&lines * 1 + 28) / 57)
+exe '1resize ' . ((&lines * 34 + 36) / 72)
+exe '2resize ' . ((&lines * 34 + 36) / 72)
 argglobal
 setlocal keymap=
 setlocal noarabic
@@ -440,125 +436,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 16 - ((15 * winheight(0) + 13) / 26)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-16
-normal! 055|
-lcd ~/dev/trackbiz/src
-wincmd w
-argglobal
-edit ~/dev/trackbiz/src/backend/apptb/models.py
-setlocal keymap=
-setlocal noarabic
-setlocal noautoindent
-setlocal backupcopy=
-setlocal nobinary
-setlocal nobreakindent
-setlocal breakindentopt=
-setlocal bufhidden=
-setlocal buflisted
-setlocal buftype=
-setlocal nocindent
-setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
-setlocal cinoptions=
-setlocal cinwords=if,else,while,do,for,switch
-set colorcolumn=80
-setlocal colorcolumn=80
-setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
-setlocal commentstring=/*%s*/
-setlocal complete=.,w,b,u,t,i
-setlocal concealcursor=
-setlocal conceallevel=0
-setlocal completefunc=
-setlocal nocopyindent
-setlocal cryptmethod=
-setlocal nocursorbind
-setlocal nocursorcolumn
-setlocal nocursorline
-setlocal define=
-setlocal dictionary=
-setlocal nodiff
-setlocal equalprg=
-setlocal errorformat=
-setlocal expandtab
-if &filetype != 'python'
-setlocal filetype=python
-endif
-setlocal fixendofline
-setlocal foldcolumn=0
-setlocal foldenable
-setlocal foldexpr=0
-setlocal foldignore=#
-setlocal foldlevel=0
-setlocal foldmarker={{{,}}}
-setlocal foldmethod=manual
-setlocal foldminlines=1
-setlocal foldnestmax=20
-setlocal foldtext=foldtext()
-setlocal formatexpr=
-setlocal formatoptions=tcq
-setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
-setlocal grepprg=
-setlocal iminsert=0
-setlocal imsearch=0
-setlocal include=
-setlocal includeexpr=
-setlocal indentexpr=
-setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
-setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
-setlocal nolinebreak
-setlocal nolisp
-setlocal lispwords=
-setlocal nolist
-setlocal makeprg=
-setlocal matchpairs=(:),{:},[:]
-setlocal modeline
-setlocal modifiable
-setlocal nrformats=bin,octal,hex
-setlocal nonumber
-setlocal numberwidth=4
-setlocal omnifunc=
-setlocal path=
-setlocal nopreserveindent
-setlocal nopreviewwindow
-setlocal quoteescape=\\
-setlocal noreadonly
-setlocal norelativenumber
-setlocal norightleft
-setlocal rightleftcmd=search
-setlocal noscrollbind
-setlocal shiftwidth=4
-setlocal noshortname
-setlocal smartindent
-setlocal softtabstop=0
-setlocal nospell
-setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
-setlocal spellfile=
-setlocal spelllang=en
-setlocal statusline=
-setlocal suffixesadd=
-setlocal noswapfile
-setlocal synmaxcol=3000
-if &syntax != 'python'
-setlocal syntax=python
-endif
-setlocal tabstop=4
-setlocal tagcase=
-setlocal tags=
-setlocal textwidth=0
-setlocal thesaurus=
-setlocal noundofile
-setlocal undolevels=-123456
-setlocal nowinfixheight
-setlocal nowinfixwidth
-setlocal wrap
-setlocal wrapmargin=0
-silent! normal! zE
-let s:l = 361 - ((15 * winheight(0) + 12) / 25)
+let s:l = 361 - ((21 * winheight(0) + 17) / 34)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -676,7 +554,7 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 0) / 1)
+let s:l = 1 - ((0 * winheight(0) + 17) / 34)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -684,9 +562,8 @@ normal! zt
 normal! 0
 lcd ~/dev/trackbiz/src
 wincmd w
-exe '1resize ' . ((&lines * 26 + 28) / 57)
-exe '2resize ' . ((&lines * 25 + 28) / 57)
-exe '3resize ' . ((&lines * 1 + 28) / 57)
+exe '1resize ' . ((&lines * 34 + 36) / 72)
+exe '2resize ' . ((&lines * 34 + 36) / 72)
 tabnext 2
 set stal=1
 if exists('s:wipebuf')

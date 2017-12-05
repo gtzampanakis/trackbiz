@@ -21,4 +21,6 @@ def pk16():
 def format_amount(amount, currency):
     if currency == 'EUR':
         currency = u'\u20ac'
+    elif currency == 'USD':
+        currency = u'$'
     return unicode(amount) + ' ' + unicode(currency)
