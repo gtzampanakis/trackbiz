@@ -9,6 +9,9 @@ import apptb.models
 
 class ActivityAdmin(admin.ModelAdmin):
     actions = [apptb.models.update_charges_action]
+    list_filter = [
+        'created_at',
+    ]
 
 class ChargeAdmin(admin.ModelAdmin):
     actions = [apptb.models.create_invoice_action]
