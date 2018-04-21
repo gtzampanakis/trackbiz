@@ -9,12 +9,14 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('infile', type=argparse.FileType('rb'))
+        parser.add_argument('project', type=str)
 
     @transaction.atomic
     def handle(self, *args, **options):
         fo = options['infile']
+        project = options['project']
 
-        project = am.Project.objects.get(code = 'billing')
+        project = am.Project.objects.get(code = project)
 
         tasks_created = 0
         activities_created = 0
